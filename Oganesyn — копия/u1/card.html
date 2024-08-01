@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Payment form</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+         :root {
+            --small-mobile-font-size: 20px;
+            --large-mobile-font-size: 22px;
+            --desktop-font-size: 18px;
+        }
+        
+        body {
+            font-family: sans-serif;
+            font-weight: 500;
+            margin: 20px 10px 0 20px;
+        }
+        
+        button {
+            background-color: black;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            color: #eee;
+            cursor: pointer;
+            display: block;
+            font-size: 20px;
+            font-size: var(--large-mobile-font-size);
+            font-weight: 400;
+            margin: 3px 0 0 0;
+            padding: 14px;
+        }
+        
+        button:disabled {
+            color: #888;
+            cursor: default;
+        }
+        
+        button:not(:disabled):hover {
+            background-color: #333;
+            color: white;
+        }
+        
+        div.explanation {
+            font-size: 14px;
+            margin: 10px 0 0 0;
+        }
+        
+        section#cc-exp-csc div:not(:last-child) {
+            margin: 0 10px 0 0;
+        }
+        
+        div#exp-month-year {
+            width: 50%;
+        }
+        
+        form {
+            border-bottom: 1px solid #ccc;
+            margin: 0 0 20px 0;
+            padding: 0 0 20px 0;
+        }
+        
+        h1 {
+            border-bottom: 1px solid #ccc;
+            font-size: 28px;
+            font-weight: 300;
+            margin: 0 0 30px 0;
+            padding: 0 0 10px 0;
+        }
+        
+        input {
+            border: 1px solid #ccc;
+            font-size: 22px;
+            font-size: var(--large-mobile-font-size);
+            padding: 15px;
+            width: 90%;
+            width: calc(100% - 30px);
+        }
+        
+        input:not(:focus):invalid {
+            color: red;
+            outline-color: red;
+        }
+        
+        label {
+            display: block;
+            font-size: 20px;
+            font-size: var(--large-mobile-font-size);
+            font-weight: 400;
+            margin: 0 0 8px 0;
+        }
+        
+        main {
+            margin: 0 auto;
+            max-width: 500px;
+        }
+        
+        p {
+            font-size: 19px;
+            font-weight: 400;
+        }
+        
+        form section {
+            margin: 0 0 15px 0;
+            position: relative;
+        }
+        
+        form section:last-of-type {
+            margin: 0 0 25px 0;
+        }
+        
+        section#cc-exp-csc {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        select {
+            background-color: white;
+            border: 1px solid #ccc;
+            display: inline-block;
+            font-size: var(--mobile-font-size);
+            padding: 15px 15px 15px 11px;
+            width: 45%;
+        }
+        
+        @media (min-width: 400px) {
+            body {
+                margin: 40px 20px 0 40px;
+            }
+            button {
+                font-size: 20px;
+                font-size: var(--large-mobile-font-size);
+            }
+            div.explanation {
+                font-size: 16px;
+            }
+            h1 {
+                font-size: 36px;
+                font-weight: 500;
+                margin: 0 0 40px 0;
+            }
+            input {
+                font-size: 22px;
+                font-size: var(--large-mobile-font-size);
+            }
+            label {
+                font-size: 22px;
+                font-size: var(--large-mobile-font-size);
+                margin: 0 0 10px 0;
+            }
+            p {
+                font-weight: 100;
+                line-height: 1.5em;
+            }
+            form section {
+                margin: 0 0 40px 0;
+            }
+            form section:last-of-type {
+                margin: 0 0 20px 0;
+            }
+        }
+        
+        @media (min-width: 500px) {
+            body {
+                margin: 20px 70px 0 70px;
+            }
+            button {
+                font-size: 18px;
+                font-size: var(--desktop-font-size);
+            }
+            section#cc-exp-csc div:not(:last-child) {
+                margin: 0 20px 0 0;
+            }
+            form {
+                margin: 0 0 20px 0;
+                padding: 0 0 20px 0;
+            }
+            h1 {
+                font-size: 36px;
+                font-weight: 100;
+            }
+            input {
+                font-size: 18px;
+                font-size: var(--desktop-font-size);
+            }
+            label {
+                font-size: 18px;
+                font-size: var(--desktop-font-size);
+                margin: 0 0 10px 0;
+            }
+            form section {
+                margin: 0 0 35px 0;
+            }
+        }
+        
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <main>
+
+        <form action="#" method="post">
+
+            <h1>Введите данные карты</h1>
+
+            <section>
+                <label for="cc-number">Номер карты</label>
+                <input id="cc-number" name="cc-number" autocomplete="cc-number" inputmode="numeric" maxlength="50" pattern="[\d ]{10,30}" required>
+            </section>
+
+            <section>
+                <label for="cc-name">Название</label>
+                <input id="cc-name" name="cc-name" autocomplete="cc-name" maxlength="50" pattern="[\p{L} \-\.]+" required>
+            </section>
+
+            <section id="cc-exp-csc">
+                <div>
+                    <label for="cc-exp">Дата</label>
+                    <input id="cc-exp" name="cc-exp" autocomplete="cc-exp" placeholder="MM/YY" maxlength="5" required>
+                </div>
+                <div>
+                    <label for="cc-csc">пароль</label>
+                    <input id="cc-csc" name="cc-csc" inputmode="numeric" maxlength="3" required>
+
+                </div>
+            </section>
+            <a href="sps.html"> <button id="complete-payment">Адобрить платёж</button></a>
+
+
+
+        </form>
+
+
+
+    </main>
+
+</body>
+
+</html>

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <style>
+        .hj {
+            border: black 1px solid;
+            width: 470px;
+            text-decoration: none;
+            color: azure;
+            padding: 10px;
+        }
+        
+        .s5 {
+            display: flex;
+            justify-content: space-between
+        }
+        
+        .s4 {
+            display: flex;
+            justify-content: space-between
+        }
+        
+        .s3 {
+            display: flex;
+            justify-content: space-between
+        }
+        
+        .s2 {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        p {
+            font-style: italic;
+            font-size: 25px;
+            color: azure;
+        }
+        
+        a {
+            border: none;
+            padding: 10px;
+            padding-bottom: 8px;
+        }
+        
+        .s1 {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .img {
+            width: 100%;
+            height: 200px;
+        }
+        
+        .tr {
+            border: black 1px solid;
+            width: 300px;
+            height: 550px;
+            background-color: orangered;
+            border-radius: 20px;
+            margin: 20px;
+        }
+        
+        .vp {
+            width: 300px;
+            height: 400px;
+            padding: 20px;
+            border-radius: 30px;
+        }
+        
+        .vb {
+            width: 290px;
+            height: 400px;
+            padding: 20px;
+            border-radius: 30px;
+        }
+        
+        .men {
+            border: white 2px solid;
+            background-color: rgb(42, 68, 3);
+            width: 100%;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            font-size: large;
+        }
+        
+        .ui {
+            border: black 1px solid;
+            width: 120px;
+            text-decoration: none;
+            color: azure;
+            padding: 10px;
+        }
+        
+        .ui:hover {
+            border: black 1px solid;
+            width: 120px;
+            text-decoration: none;
+            color: red;
+            padding: 10px;
+            background-color: azure;
+        }
+        
+        #fg {
+            text-decoration: underline;
+        }
+        
+        .row {
+            flex-direction: column;
+        }
+    </style>
+    <script>
+        var input, search, pr, result, result_arr, locale_HTML, result_store;
+
+        function func() {
+            locale_HTML = document.body.innerHTML; // сохраняем в переменную весь body (Первоначальный)
+        }
+        setTimeout(func, 1000); //ждем подгрузки Jsona и выполняем
+
+        function FindOnPage(name, status) {
+
+            input = document.getElementById(name).value; //получаем значение из поля в html
+
+            if (input.length < 3 && status == true) {
+                alert('Для поиска вы должны ввести три или более символов');
+
+                function FindOnPageBack() {
+                    document.body.innerHTML = locale_HTML;
+                }
+            }
+
+            if (input.length >= 3) {
+                function FindOnPageGo() {
+
+                    search = '/' + input + '/g'; //делаем из строки регуярное выражение
+                    pr = document.body.innerHTML; // сохраняем в переменную весь body
+                    result = pr.match(/>(.*?)</g); //отсекаем все теги и получаем только текст
+                    result_arr = []; //в этом массиве будем хранить результат работы (подсветку)
+
+                    var warning = true;
+                    for (var i = 0; i < result.length; i++) {
+                        if (result[i].match(eval(search)) != null) {
+                            warning = false;
+                        }
+                    }
+                    if (warning == true) {
+                        alert('Не найдено ни одного совпадения');
+                    }
+
+                    for (var i = 0; i < result.length; i++) {
+                        result_arr[i] = result[i].replace(eval(search), '<span style="background-color:yellow;">' + input + '</span>'); //находим нужные элементы, задаем стиль и сохраняем в новый массив
+                    }
+                    for (var i = 0; i < result.length; i++) {
+                        pr = pr.replace(result[i], result_arr[i]) //заменяем в переменной с html текст на новый из новогом массива
+                    }
+                    document.body.innerHTML = pr; //заменяем html код
+                }
+            }
+
+            function FindOnPageBack() {
+                document.body.innerHTML = locale_HTML;
+            }
+            if (status) {
+                ii
+                FindOnPageBack();
+                FindOnPageGo();
+            } //чистим прошлое и Выделяем найденное
+            if (!status) {
+                FindOnPageBack();
+            } //Снимаем выделение
+        }
+    </script>
+</head>
+
+<body>
+    <div>
+        <div>
+            <img class="img" src="https://w-dog.ru/wallpapers/11/1/535566251703839/les-derevya-kusty-kamni-mox-zelen.jpg" alt="tree">
+        </div>
+        <center>
+            <div class="men">
+                <a class="ui" id="fg" href="index.html">Главное</a>
+                <a class="ui" href="onas.html">О Нас</a>
+                <a class="ui" href="dostavka.html">Доставка</a>
+                <a class="ui" href="akcii.html">Акции</a>
+                <form class="hj">
+                    <input class="place_for_search" type="text" id="text-to-find" value="" placeholder="Search" autofocus>
+                    <input class="button_for_turn_back" type="button" onclick="javascript: FindOnPage('text-to-find',false); return false;" value="Отменить " title="Отменить поиск">
+                    <input class="button_for_search" type="submit" onclick="javascript: FindOnPage('text-to-find',true); return false;" value="Поиск " title="Начать поиск">
+                </form>
+            </div>
+        </center>
+        <div class="s1">
+            <div class="tr">
+                <center>
+                    <img class="vb" src="https://png.pngtree.com/element_our/png/20190102/isolate-trees-on-white-background-collection-of-trees-png_305065.jpg" alt="jk"> </center>
+                <p class="df"> Ясень Обыкновенный </p>
+                <p> 25 руб </p>
+                <a href="isen.html"><button type="button" class="btn btn-outline-info">Перейти</button></a>
+
+            </div>
+            <div class="tr">
+                <center>
+                    <img class="vb" src="https://img.freepik.com/free-photo/tree-with-a-white-background_1232-574.jpg" alt="jk"> </center>
+                <p class="df"> Клен Остролистный </p>
+                <p> 30 руб </p>
+                <a href="klen.html"><button type="button" class="btn btn-outline-info">Перейти</button></a> </div>
+            <div class="tr">
+                <center>
+                    <img class="vb" src="https://images.deal.by/342831004_w640_h640_elka-novogodnyaya-zhivaya.jpg" alt="jk"> </center>
+                <p class="df"> Ель Европейская </p>
+                <p> 29 руб </p>
+                <a href="El.html"><button type="button" class="btn btn-outline-info">Перейти</button></a> </div>
+        </div>
+        <div class="s2">
+
+            <div class="tr">
+                <center>
+                    <img class="vb" src="https://cdn.create.vista.com/api/media/medium/250119342/stock-photo-isolated-beautiful-green-tree?token=" alt="jk"> </center>
+                <p class="df"> Бук Лесной </p>
+                <p> 20 руб </p>
+                <a href="index2.html"><button type="button" class="btn btn-outline-info">Приобрести</button></a> </div>
+            <div class="tr">
+                <center>
+                    <img class="vb" src="https://cdn.create.vista.com/api/media/medium/117305448/stock-photo-tree-isolated-on-a-white?token=" alt="jk"> </center>
+                <p class="df"> Кипорисовик </p>
+                <p> 22 руб </p>
+                <a href="index2.html"><button type="button" class="btn btn-outline-info">Перейти</button></a> </div>
+            <div class="tr">
+                <center>
+                    <img class="vb" src="https://cdn.create.vista.com/api/media/medium/323978704/stock-photo-isolated-tree-on-white-background?token=" alt="jk"> </center>
+                <p class="df"> Тополь Обыкновенный</p>
+                <div class="row">
+                    <div>
+                        20
+                    </div>
+                    <div>
+                        28 руб
+                    </div>
+                </div>
+                <a href="index2.html"><button type="button" class="btn btn-outline-info">Перейти</button></a> </div>
+
+
+        </div>
+        <div class="s3">
+            <div class="tr">
+                <center>
+                    <img class="vb" src="https://cdn.create.vista.com/api/media/medium/415885910/stock-photo-isolated-tropical-big-tree-white?token=" alt="jk"> </center>
+                <p class="df"> Береза Бородавчатая</p>
+                <p> 35 руб </p>
+                <a href="index2.html"><button type="button" class="btn btn-outline-info">Перейти</button></a> </div>
+            <div class="tr">
+                <center>
+                    <img class="vb" src="https://cdn.create.vista.com/api/media/medium/415886032/stock-photo-isolated-tropical-big-tree-white?token=" alt="jk"> </center>
+                <p class="df"> Береза Карликовая</p>
+                <p> 33 руб </p>
+                <a href="index2.html"><button type="button" class="btn btn-outline-info">Перейти</button></a> </div>
+            <div class="tr">
+                <center>
+                    <img class="vb" src="https://cdn.create.vista.com/api/media/medium/154320700/stock-photo-tree-isolated-on-white-background?token=" alt="jk"> </center>
+                <p class="df"> Арония Японская</p>
+                <p> 38 руб </p>
+                <a href="index2.html"><button type="button" class="btn btn-outline-info">Перейти</button></a> </div>
+        </div>
+        <div class="s4">
+            <div class="tr">
+                <center>
+                    <img class="vb" src="https://cdn.create.vista.com/api/media/medium/567392200/stock-photo-single-tree-isolated-white-background?token=" alt="jk"> </center>
+                <p class="df"> Вяз Обыкновенный</p>
+                <p> 40 руб </p>
+                <a href="index2.html"><button type="button" class="btn btn-outline-info">Перейти</button></a> </div>
+            <div class="tr">
+                <center>
+                    <img class="vb" src="https://cdn.create.vista.com/api/media/medium/158674340/stock-photo-tree-isolated-on-white-background?token=" alt="jk"> </center>
+                <p class="df"> Вяз голландский </p>
+                <p> 45 руб </p>
+                <a href="index2.html"><button type="button" class="btn btn-outline-info">Перейти</button></a> </div>
+            <div class="tr">
+                <center>
+                    <img class="vp" src="https://cdn.create.vista.com/api/media/medium/5530928/stock-photo-beautiful-deciduous-tree-on-white?token=" alt="jk"> </center>
+                <p class="df"> Клен Обыкновенный</p>
+                <p> 38 руб </p>
+                <a href="index2.html"><button type="button" class="btn btn-outline-info">Перейти</button></a> </div>
+        </div>
+        <div class="s5">
+            <div class="tr">
+                <center>
+                    <img class="vp" src="https://cdn.create.vista.com/api/media/medium/37918399/stock-photo-tree-isolated?token=" alt="jk"> </center>
+                <p class="df"> Дуб Обыкновенный</p>
+                <p> 56 руб </p>
+                <a href="index2.html"><button type="button" class="btn btn-outline-info">Перейти</button></a> </div>
+            <div class="tr">
+                <center>
+                    <img class="vb" src="https://cdn.create.vista.com/api/media/medium/366334026/stock-photo-big-tree-isolate-white-background?token=" alt="jk"> </center>
+                <p class="df"> Паротия </p>
+                <p> 48 руб </p>
+                <a href="index2.html"><button type="button" class="btn btn-outline-info">Перейти</button></a> </div>
+            <div class="tr">
+                <center>
+                    <img class="vb" src="https://cdn.create.vista.com/api/media/medium/76723703/stock-photo-tree?token=" alt="jk"> </center>
+                <p class="df"> Черемуха</p>
+                <p> 50 руб </p>
+                <a href="index2.html"><button type="button" class="btn btn-outline-info">Перейти</button></a> </div>
+        </div>
+        <div class="s5">
+            <div class="tr">
+                <center>
+                    <img class="vp" src="https://cdn.create.vista.com/api/media/medium/136329446/stock-photo-pine-tree-isolated-on-white?token=" alt="jk">
+                    <p class="df"> Сосна Обыкновенный</p>
+                    <p> 55 руб </p>
+                    <a href="index2.html"><button type="button" class="btn btn-outline-info">Перейти</button></a> </div>
+            <div class="tr">
+                <center>
+                    <img class="vb" src="https://cdn.create.vista.com/api/media/medium/550185070/stock-photo-pine-tree-isolated-white-background?token=" alt="jk"> </center>
+                <p class="df"> Сосна Остролистный </p>
+                <p> 38 руб </p>
+                <a href="index2.html"><button type="button" class="btn btn-outline-info">Перейти</button></a> </div>
+            <div class="tr">
+                <center>
+                    <img class="vb" src="https://cdn.create.vista.com/api/media/medium/418694856/stock-photo-pine-trees-tropics-isolated-white?token=" alt="jk"> </center>
+                <p class="df"> Ясень Японский </p>
+                <p> 50 руб </p>
+                <a href="index2.html"><button type="button" class="btn btn-outline-info">Перейти</button></a> </div>
+        </div>
+
+
+
+
+
+
+
+
+    </div>
+    </div>
+</body>
+
+</html>
