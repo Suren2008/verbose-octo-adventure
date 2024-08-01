@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie and TV Show Website</title>
+    <style>
+        /* Общие стили */
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        main {
+            padding: 2rem;
+        }
+        
+        section {
+            margin-bottom: 2rem;
+        }
+        
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+        /* Стили для фильмов */
+        
+        #movies {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        
+        #movies div {
+            width: 200px;
+            /* Ширина блока с постером фильма */
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        #movies img {
+            width: 100%;
+            /* Растягиваем изображение до ширины блока */
+            height: auto;
+            /* Автоматическая высота */
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to Movie and TV Show Website</h1>
+        <input type="text" id="searchInput" placeholder="Search movie by title">
+    </header>
+    <main>
+        <section id="movies">
+            <!-- Movies content will be dynamically loaded here -->
+        </section>
+        <section id="tv-shows">
+            <!-- TV shows content will be dynamically loaded here -->
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Movie and TV Show Website</p>
+    </footer>
+    <script src="script.js">
+        fetch('https://api.example.com/movies')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(movie => {
+                    const movieElement = document.createElement('div');
+
+                    // Create an anchor element for the movie link
+                    const movieLink = document.createElement('a');
+                    movieLink.href = "https://www.google.com/search?sca_esv=244bdb9c0e4cb0b6&sca_upv=1&sxsrf=ADLYWIIcZE5tPQUsX13EX0cRskIx__KkkQ:1722425270358&q=%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8+%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80%D0%BE%D0%B2+%D1%80%D0%B0%D0%B7%D0%BD%D1%8B%D1%85+%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D0%BE%D0%B2&udm=2&fbs=AEQNm0DpvuYEwHLg4ukM13djj3L-QHoYfc9S0SPPH_LNq0-s-glyVvhUn4PiSMZXzyjuHWp4WugSZ7WIO4mgdldMrj4FrEkwSR8DHXyrut2V77vrJacQ50_U4nMSt5J37j-659bwQuDKCScDBbjR8jYR1Ujjn8trQidhPQATwua4oL_xqCUM5VviUx1bh2vgfli-kp_WU5h-MgTKy3Z6t17vpfhrh4sk1JGUqK1-jlXpCCi9vihVmVY&sa=X&ved=2ahUKEwi6-5CTltGHAxUzxgIHHbNcGfcQtKgLegQIEBAB&biw=1536&bih=825&dpr=2.5#vhid=5HdKPX3_QxGRpM&vssid=mosaic"; // Пример: ссылка на страницу фильма
+                    movieLink.target = "_blank"; // Открывать ссылку в новой вкладке
+
+                    // Create an image element for the movie poster
+                    const posterImg = document.createElement('img');
+                    posterImg.src = "https://poster4.me/wp-content/uploads/2020/05/6bb06dcd-bbf9-4d75-8a67-1018ad8cce62-350x530.jpeg"; // Здесь movie.posterUrl должен быть URL-адресом изображения
+                    posterImg.alt = 'brat';
+
+                    // Добавление изображения к элементу ссылки на фильм
+                    movieLink.appendChild(posterImg);
+                    movieElement.appendChild(movieLink);
+
+                    // Create a text element for movie title
+                    const titleText = document.createElement('p');
+                    titleText.textContent = movie.title;
+
+                    // Добавление текста с названием фильма к блоку фильма
+                    movieElement.appendChild(titleText);
+
+                    moviesSection.appendChild(movieElement);
+                });
+            });
+    </script>
+</body>
+
+</html>

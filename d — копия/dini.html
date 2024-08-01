@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>dino rex game</title>
+    <style>
+        .game {
+            width: 600px;
+            height: 200px;
+            border-bottom: 1px solid #000;
+            margin: auto;
+        }
+        
+        #cont {
+            width: 50%;
+            display: flex;
+            margin: 0 auto;
+        }
+        
+        #diff {
+            top: 30px;
+            background: green;
+            border-radius: 5px;
+            margin: 0 auto;
+        }
+        
+        #btn {
+            width: 55px;
+            top: 30px;
+            background: green;
+            right: 100px;
+            border-radius: 5px;
+            margin: 0 auto;
+        }
+        
+        #out {
+            top: 30px;
+            color: green;
+            margin: 0 auto;
+            border-radius: 5px;
+        }
+        
+        #dino {
+            width: 50px;
+            height: 50px;
+            position: relative;
+            top: 150px;
+        }
+        
+        #cactus {
+            width: 20px;
+            height: 40px;
+            background: radial-gradient(green, black);
+            background-size: 20px 40px;
+            position: relative;
+            top: 110px;
+            left: 580px;
+            animation: cactusMov 1.5s infinite;
+            animation-timing-function: cubic-bezier(0.5, 0.5, 0.7, 0.5);
+        }
+        
+        @keyframes cactusMov {
+            0% {
+                left: 580px;
+            }
+            100% {
+                left: -20px;
+            }
+        }
+        
+        .jump {
+            animation: jump 0.3s linear;
+        }
+        
+        @keyframes jump {
+            0% {
+                top: 150px;
+            }
+            20% {
+                top: 130px;
+            }
+            50% {
+                top: 80px;
+            }
+            80% {
+                top: 130px;
+            }
+            100% {
+                top: 150px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="cont">
+        <select size="1" id="diff">
+        <option value="1" selected>easy</option>
+        <option value="2" >midle</option>
+        <option value="5" >hard</option>
+      </select>
+        <div id="out">loots: 0</div>
+        <input id="btn" type="button" value="Stop">
+    </div>
+
+    <div class="game">
+        <img src="https://rerofya.github.io/resources/dino.svg" id="dino">
+        <div id="cactus"></div>
+    </div>
+
+    <script>
+        const dino = document.getElementById('dino');
+        const cactus = document.getElementById('cactus');
+        const btn = document.getElementById('btn');
+        const out = document.getElementById('out');
+        const diff = document.getElementById('diff');
+
+        let bezie = [
+            'cubic-bezier(0.5,0.5,0.7,0.5)',
+            'cubic-bezier(0.35,0.7,0.9,0.7)',
+            'cubic-bezier(0.25,0.4,0.2,0.3)',
+            'cubic-bezier(0.7,0.4,0.4,0.7)'
+        ]
+        let isAlive = gameStart();
+        let loots = 0;
+        let f = false;
+
+        btn.addEventListener('click', function(event) {
+            btn.value == "Stop" ? stop() : isAlive = gameStart();
+            this.blur();
+        });
+
+        document.addEventListener('keydown', function(event) {
+            jump();
+        });
+
+        function jump() {
+            if (dino.classList != 'jump') {
+                dino.classList.add('jump');
+            }
+            setTimeout(function() {
+                dino.classList.remove('jump');
+            }, 300)
+        }
+
+        function gameStart() {
+            btn.value = "Stop";
+            btn.style.background = "green";
+            cactus.style.animationPlayState = 'running';
+            return setInterval(checking, 10);
+        }
+
+        function checking() {
+            let dinoTop = parseInt(window.getComputedStyle(dino).getPropertyValue('top'))
+            let cactusLeft = parseInt(window.getComputedStyle(cactus).getPropertyValue('left'))
+            if (!f && cactusLeft > 50) f = true;
+            if (cactusLeft < 0 && f) {
+                f = false;
+                changeMover();
+            }
+            if (cactusLeft < 50 && cactusLeft > 0 && dinoTop >= 140) {
+                stop();
+                gameOver();
+            }
+        }
+
+        function stop() {
+            btn.value = "Start";
+            btn.style.background = "red";
+            cactus.style.animationPlayState = 'paused';
+            clearInterval(isAlive);
+        }
+
+        function gameOver() {
+            out.style.border = "";
+            out.innerHTML = "loots: 0";
+
+            alert('Game Over\nYour loots: ' + loots);
+            loots = 0;
+        }
+
+        function changeMover() {
+            let idx = diff.options.selectedIndex;
+            let val = diff.options[idx].value;
+            let i = Math.floor(Math.random() * val);
+            cactus.style.animationTimingFunction = bezie[i];
+            reward(lootCount(val));
+        }
+
+        function lootCount(val) {
+            loots++;
+            out.innerHTML = "loots: " + loots;
+            if (val == 1) {
+                return [15, 20, 25, 30]
+            }
+            if (val == 2) {
+                return [10, 15, 20, 25]
+            }
+            if (val == 5) {
+                return [5, 10, 15, 20]
+            }
+        }
+
+        function reward(count) {
+            if (loots == count[0]) {
+                out.style.border = 'groove';
+
+            }
+            if (loots == count[1]) {
+                out.style.border = 'double';
+
+            }
+            if (loots == count[2]) {
+                out.style.border = 'inset';
+
+            }
+            if (loots == count[3]) {
+                out.style.border = 'outset';
+
+            }
+        }
+    </script>
+</body>
+
+</html>
